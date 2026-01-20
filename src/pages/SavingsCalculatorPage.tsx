@@ -21,23 +21,23 @@ export function SavingsCalculatorPage() {
     defaultValues: {
       targetAmount: 0,
       monthlyAmount: 0,
-      terms: 12,
+      savingMonths: 12,
     },
     mode: 'onChange',
   });
 
   const targetAmount = watch('targetAmount');
   const monthlyAmount = watch('monthlyAmount');
-  const terms = watch('terms');
+  const savingMonths = watch('savingMonths');
 
-  const filteredProducts = filterSavingsProducts(products, monthlyAmount, terms);
+  const filteredProducts = filterSavingsProducts(products, monthlyAmount, savingMonths);
   const selectedProduct = products.find(product => product.id === selectedProductId) ?? null;
   const recommendedProducts = getTopProductsByAnnualRate(filteredProducts, 2);
 
   const { expectedAmount, difference, recommendMonthlyAmount } = calculateSavingsResult({
     targetAmount,
     monthlyAmount,
-    terms,
+    savingMonths,
     annualRate: selectedProduct?.annualRate ?? 0,
   });
 
@@ -84,7 +84,7 @@ export function SavingsCalculatorPage() {
       <Spacing size={16} />
       <Controller
         control={control}
-        name="terms"
+        name="savingMonths"
         render={({ field }) => (
           <SelectBottomSheet
             label="저축 기간"

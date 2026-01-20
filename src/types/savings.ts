@@ -10,7 +10,7 @@ export interface SavingsProduct {
 export interface SavingsFormInput {
   targetAmount: number;
   monthlyAmount: number;
-  terms: number;
+  savingMonths: number;
 }
 
 export interface CalculateSavingsParams extends SavingsFormInput {
