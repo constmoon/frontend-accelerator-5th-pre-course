@@ -1,5 +1,5 @@
 export function formatNumber(value: number) {
-    return value.toLocaleString('ko-KR');
+    return isNaN(value) ? '' : value.toLocaleString('ko-KR');
   }
   
   export function parseNumberInput(value: string): number {

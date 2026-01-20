@@ -15,7 +15,7 @@ const NumberInput = ({ label, placeholder, suffix, value, onChange }: NumberInpu
       label={label}
       placeholder={placeholder}
       suffix={suffix}
-      value={value > 0 ? formatNumber(value) : ''}
+      value={formatNumber(value)}
       onChange={e => onChange(parseNumberInput(e.target.value))}
     />
   );
