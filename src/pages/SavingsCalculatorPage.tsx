@@ -7,7 +7,7 @@ import { SavingsFormInput } from 'types/savings';
 import NumberInput from 'components/NumberInput';
 import SavingProductItem from 'components/SavingsProductItem';
 import CalculateResultItem from 'components/CalculateResultItem';
-import { filterSavingsProducts } from 'utils/filterSavingsProducts';
+import { isMonthlyAmountValid, isSavingMonthsValid, isSavingsProductValid } from 'utils/filterSavingsProducts';
 import { calculateSavingsResult } from 'utils/calculateSavingsResult';
 import { getTopProductsByAnnualRate } from 'utils/sortSavingsProducts';
 
@@ -30,7 +30,13 @@ export function SavingsCalculatorPage() {
   const monthlyAmount = watch('monthlyAmount');
   const savingMonths = watch('savingMonths');
 
-  const filteredProducts = filterSavingsProducts(products, monthlyAmount, savingMonths);
+  const filteredProducts =
+    monthlyAmount === 0
+      ? products
+      : products.filter(
+          product => isMonthlyAmountValid(monthlyAmount, product) && isSavingMonthsValid(savingMonths, product)
+        );
+
   const selectedProduct = filteredProducts.find(product => product.id === selectedProductId) ?? null;
   const recommendedProducts = getTopProductsByAnnualRate(filteredProducts, 2);
 
