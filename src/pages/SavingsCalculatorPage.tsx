@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { savingsProductQueryOptions } from 'api/savings';
 import { useQuery } from '@tanstack/react-query';
@@ -31,7 +31,7 @@ export function SavingsCalculatorPage() {
   const savingMonths = watch('savingMonths');
 
   const filteredProducts = filterSavingsProducts(products, monthlyAmount, savingMonths);
-  const selectedProduct = products.find(product => product.id === selectedProductId) ?? null;
+  const selectedProduct = filteredProducts.find(product => product.id === selectedProductId) ?? null;
   const recommendedProducts = getTopProductsByAnnualRate(filteredProducts, 2);
 
   const { expectedAmount, difference, recommendMonthlyAmount } = calculateSavingsResult({
@@ -40,14 +40,6 @@ export function SavingsCalculatorPage() {
     savingMonths,
     annualRate: selectedProduct?.annualRate ?? 0,
   });
-
-  const isSelectedProductVisible = filteredProducts.some(product => product.id === selectedProductId);
-
-  useEffect(() => {
-    if (selectedProductId && !isSelectedProductVisible) {
-      setSelectedProductId(null);
-    }
-  }, [selectedProductId, isSelectedProductVisible]);
 
   return (
     <>
